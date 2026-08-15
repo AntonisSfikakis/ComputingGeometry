@@ -1,12 +1,43 @@
-technique
-    -> prosthetoyme ta simia sto sinolo P ena pros ena
-    -> tha enimeronoume katallhla thn trexousa lisi
+Incremental Algorithm
+    technique
+        -> prosthetoyme ta simia sto sinolo P ena pros ena
+        -> tha enimeronoume katallhla thn trexousa lisi
 
-        + diatasoume ta shmeia kata afksouesa x
-        + tha prosthemouse simeia se mia taksinonmimenh akolouthia
-        anw periblhma -> apo to aristerotero p1 mexri to deksiotero pn apo epanw
-        katw periblhma -> to idio alla pros ta katw kai tha ypologistei deftero
+            + diatasoume ta shmeia kata afksouesa x
+            + tha prosthemouse simeia se mia taksinonmimenh akolouthia
+            anw periblhma -> apo to aristerotero p1 mexri to deksiotero pn apo epanw
+            katw periblhma -> to idio alla pros ta katw kai tha ypologistei deftero
 
-    vasiko vhma : h enhmerwsh tou anw periblhmatos 
+        vasiko vhma : h enhmerwsh tou anw periblhmatos  -> apo p1 mexri pi-1 prepie na prosthemouse
+        to pi kai afot gienetai me mia pros ta deksia
 
+        gia na prosthemouse to pi:
+            -> L(anw) : oles oi korifes tou anw periblhmatos apo aristerotera pros ta deksia
+            -> prosthetoyme to pi sto L(anw)
+            -> sinexizoume me to pi+1
+            ->  an ta teleftaia tria shmeia pernoun ariterh strofh  , nea tria teleftaio sinexomena
+            tote afairoume to shmeio apo to L(anw)
+            -> sinexizoume mexri ta tria teleftai simeia na orizoun deksia strofh h na meinoun 2 
+            shmeia
+
+        orismos mia strofhs an exoume dio dianismata p1 kai p2 :
+            ann h tirth sidetagmenh tou p1 x p2 > 0 -> aristerostrofa
+            ann h tirth sidetagmenh tou p1 x p2 < 0 -> deksiostrofa 
+            ann h tirth sidetagmenh tou p1 x p2 - 0 -> mi orismenh 
+
+            to CCW (CounterClockWise)
+                -> orizei se poia plevra thns aftias twn p0 kai p1 , anikei to p2 
+                -> ypologizei thn strofh twn shmeiwn p0, p1, p2:  > 0 -> aristerostrofa
+                                                                  < 0 -> deksiostrofa
+                                                                  = 0 -> sinefthiaka
+
+
+
+        Algorithm:
         
+        input : P (set of p with pairs)
+        output : 
+
+
+
+            
