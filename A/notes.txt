@@ -30,13 +30,16 @@ Incremental Algorithm
                 -> ypologizei thn strofh twn shmeiwn p0, p1, p2:  > 0 -> aristerostrofa
                                                                   < 0 -> deksiostrofa
                                                                   = 0 -> sinefthiaka
+        steps are described in the code
+
+Gift wrapping Algorithm
+    -> h to plhthos twn korifwn
+    -> basikh idea : xrhsimopoioume thn akmh tou poligonou pou molis brhkame gia na vroume thn
+    epomenh
+    -> poligwnikh alisisda : efthigramma tmitmata pou sindewodai metaksi tou diadoxika kai to teleftaio 
+    sindetai me to prwto. 
 
 
-
-        Algorithm:
-        
-        input : P (set of p with pairs)
-        output : 
 
 
 

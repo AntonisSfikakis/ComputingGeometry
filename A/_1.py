@@ -25,13 +25,9 @@ def Incremental(P: set[tuple[int, int]]):
 
             # det = x2y3 - x3y2 -x1y3 + x1y2 + y1x3 - y1x2
             
-            x1 = L_upp[-3][0]
-            y1 = L_upp[-3][1]
-            x2 = L_upp[-2][0]
-            y2 = L_upp[-2][1]
-            x3 = L_upp[-1][0]
-            y3 = L_upp[-1][1]
-
+            x1,y1 = L_down[-3]
+            x2,y2 = L_down[-2]
+            x3,y3 = L_down[-1]
 
             det = x2*y3 - x3*y2 -x1*y3 + x1*y2 + y1*x3 - y1*x2
 
@@ -68,3 +64,50 @@ def Incremental(P: set[tuple[int, int]]):
 
     L = L_upp + L_down
     return L
+
+def GiftWrapping(S : set[tuple[int , int]]):
+    # step 1 : r = min(S)
+    r = r0 = min(S, key=lambda x: (x[0], x[1])) 
+    #print(f"R0 : {r0}")
+
+    # step 2 : create the chain
+    Chain : list[tuple[int , int]] = [r0]
+
+    for u in S:
+    #    print(f"u = {u}") 
+        if u == r : continue 
+
+        for t in S:
+            if t == u or t == r : continue 
+            # if clockwise or sinefthiaka -> det <= 0  
+            
+            x1,y1 = r
+            x2,y2 = u 
+            x3,y3 = t
+
+            det = x2*y3 - x3*y2 -x1*y3 + x1*y2 + y1*x3 - y1*x2
+
+            if det < 0 : 
+                u = t
+                break
+            elif det == 0 :
+                # sinefthiaka , ypologizoume thn apostash r->u kai r->t. An ru < rt then u = t
+                
+
+          
+
+        if u == r0:
+            break
+        
+        r = u
+        Chain.append(r)
+
+    return Chain
+
+
+
+
+
+
+S = {(1,7),(1,6),(1,5),(1,4),(1,3),(1,2)}
+GiftWrapping(S)
