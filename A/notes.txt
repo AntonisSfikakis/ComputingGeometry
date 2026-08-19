@@ -40,6 +40,15 @@ Gift wrapping Algorithm
     sindetai me to prwto. 
     -> kathe u psaxne to pio deksia katw akro
 
+Divide and Conquer
+    -> spame to problhma se dio ypoproblhmata anadromika mexri na ginoun toso mikra wste na lithoun
+    -> to kleidi einai h apotelesmaitkh sighwnefsi tou
+    -> T(n) = O(n logn)
+    -> kanena shmeio den exei thn idia tetmimenh aka ta dio kirta periblhmata den temnodai 
+    -> ta shemia einai se genikh thesi
+    
+
+
 
 
 

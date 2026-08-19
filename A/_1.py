@@ -103,10 +103,13 @@ def GiftWrapping(S : set[tuple[int , int]]):
 
     return Chain
 
+def DivideAndConquer(P : set[tuple[int, int]], flag : int):
+    # a flag in order to sort the first iteration
+    if flag : 
+        P_sorted = tuple(sorted(P, key=lambda x : [x[0], x[1]]))
 
+    if len(P) == 3 :
+        return 
+    
+    return
 
-
-
-
-S = {(1,7),(1,6),(1,5),(1,4),(1,3),(1,2)}
-GiftWrapping(S)

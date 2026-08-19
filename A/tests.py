@@ -57,4 +57,3 @@ def tests_GiftWrapping():
         print(f"Points : {sorted(list(points))}")
         print(f"Result : {result}")
         print("-" * 50)
-tests_GiftWrapping()
