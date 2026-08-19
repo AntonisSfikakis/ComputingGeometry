@@ -73,10 +73,9 @@ def GiftWrapping(S : set[tuple[int , int]]):
     # step 2 : create the chain
     Chain : list[tuple[int , int]] = [r0]
 
-    for u in S:
+    while True:
     #    print(f"u = {u}") 
-        if u == r : continue 
-
+        u = next(point for point in S if point != r)
         for t in S:
             if t == u or t == r : continue 
             # if clockwise or sinefthiaka -> det <= 0  
@@ -89,12 +88,12 @@ def GiftWrapping(S : set[tuple[int , int]]):
 
             if det < 0 : 
                 u = t
-                break
             elif det == 0 :
                 # sinefthiaka , ypologizoume thn apostash r->u kai r->t. An ru < rt then u = t
-                
-
-          
+                distance_ru = (x2 - x1)**2 + (y2 - y1)**2       
+                distance_rt = (x3 - x1)**2 + (y3 - y1)**2       
+                if distance_ru < distance_rt :
+                    u = t
 
         if u == r0:
             break
