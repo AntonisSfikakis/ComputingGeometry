@@ -46,6 +46,8 @@ Divide and Conquer
     -> T(n) = O(n logn)
     -> kanena shmeio den exei thn idia tetmimenh aka ta dio kirta periblhmata den temnodai 
     -> ta shemia einai se genikh thesi
+    -> dhmiorgia Algorithm gia CCW taksinonmish
+    -> Uppbridge kai DownBridge Algorithms
     
 
 

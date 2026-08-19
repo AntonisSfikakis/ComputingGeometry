@@ -1,4 +1,5 @@
 import numpy as np
+from math import floor, ceil
 
 # P is a set of pairs (aka tuples) , mayber ordered later
 def Incremental(P: set[tuple[int, int]]):
@@ -73,8 +74,8 @@ def GiftWrapping(S : set[tuple[int , int]]):
     # step 2 : create the chain
     Chain : list[tuple[int , int]] = [r0]
 
+    # step 3 : select a u (different of r), then select a t (different from u and r) if u closer right than t then u = t
     while True:
-    #    print(f"u = {u}") 
         u = next(point for point in S if point != r)
         for t in S:
             if t == u or t == r : continue 
@@ -95,6 +96,7 @@ def GiftWrapping(S : set[tuple[int , int]]):
                 if distance_ru < distance_rt :
                     u = t
 
+        # step 4 : end of the loop . Chain finished
         if u == r0:
             break
         
@@ -102,14 +104,38 @@ def GiftWrapping(S : set[tuple[int , int]]):
         Chain.append(r)
 
     return Chain
+def SolveDevideAndConquer(P : set[tuple[int, int]]):
+    # step 1 : x sort P  
+    P_sorted = tuple(sorted(P, key=lambda x : [x[0], x[1]]))
+    return DivideAndConquer(P_sorted)
 
-def DivideAndConquer(P : set[tuple[int, int]], flag : int):
+def DivideAndConquer(P : set[tuple[int, int]]):
     # a flag in order to sort the first iteration
-    if flag : 
-        P_sorted = tuple(sorted(P, key=lambda x : [x[0], x[1]]))
+    if len(P) <= 3 :
+        return CCWSorting(P) 
 
-    if len(P) == 3 :
-        return 
-    
+    A : set[tuple[int , int]] = P[0 : ceil(len(P)/2)]
+    B : set[tuple[int , int]] = P[floor (len(P)/2) + 1 : len(P)]
+    print(f"P : {P}")
+    print(f"A : {A}")
+    print(f"B : {B}")
+#    DivideAndConquer(A) 
+#    DivideAndConquer(B)
+    UppBridge(A,B)
+    DownBridge(A,B)
+
     return
+# CCW sorting
+def CCWSorting(P : set[tuple[int, int]]):
+    return
+# Upp bridge and Down bridge for Devide And conquer
+def UppBridge(A : set[tuple[int, int]], B : set[tuple[int, int]]):
+    return
+
+def DownBridge(A : set[tuple[int, int]], B : set[tuple[int, int]]):
+    return
+
+
+S = set([(10,27), (5,6), (7,8), (0,2), (2,5)])
+SolveDevideAndConquer(S)
 
