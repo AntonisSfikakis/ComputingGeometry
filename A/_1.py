@@ -1,3 +1,4 @@
+
 import numpy as np
 from math import floor, ceil
 
@@ -114,20 +115,29 @@ def DivideAndConquer(P : set[tuple[int, int]]):
     if len(P) <= 3 :
         return CCWSorting(P) 
 
-    A : set[tuple[int , int]] = P[0 : ceil(len(P)/2)]
-    B : set[tuple[int , int]] = P[floor (len(P)/2) + 1 : len(P)]
+    A : list[tuple[int , int]] = P[0 : ceil(len(P)/2)]
+    B : list[tuple[int , int]] = P[floor (len(P)/2) + 1 : len(P)]
+
     print(f"P : {P}")
     print(f"A : {A}")
     print(f"B : {B}")
-#    DivideAndConquer(A) 
-#    DivideAndConquer(B)
-    UppBridge(A,B)
-    DownBridge(A,B)
 
-    return
+    L = list(DivideAndConquer(A))
+    R = list(DivideAndConquer(B))
+
+    return MyMerge(L,R, UppBridge(L,R), DownBridge(L,R))
+
 # CCW sorting
-def CCWSorting(P : set[tuple[int, int]]):
-    return
+def CCWSorting(P : list[tuple[int, int]]) -> list[tuple[int, int]]:
+    det = ComputeDet(P[0], P[1], P[2])
+    if det > 0 :
+        return list(P) 
+
+    if det == 0:
+        return [P[0], P[2]] 
+    
+    return [P[0], P[2], P[1]]
+
 # Upp bridge and Down bridge for Devide And conquer
 def UppBridge(A : set[tuple[int, int]], B : set[tuple[int, int]]):
     return
@@ -135,7 +145,17 @@ def UppBridge(A : set[tuple[int, int]], B : set[tuple[int, int]]):
 def DownBridge(A : set[tuple[int, int]], B : set[tuple[int, int]]):
     return
 
+def MyMerge(L : list[tuple[int, int]], R : list[tuple[int, int]], upp : list[tuple[int, int]], down : list[tuple[int, int]]):
+    return
 
+def ComputeDet(x : tuple[int, int], y : tuple[int, int], z : tuple[int, int]):
+    x1,y1 = x 
+    x2,y2 = y 
+    x3,y3 = z 
+
+    det = x2*y3 - x3*y2 -x1*y3 + x1*y2 + y1*x3 - y1*x2
+    return det
+   
 S = set([(10,27), (5,6), (7,8), (0,2), (2,5)])
 SolveDevideAndConquer(S)
 
