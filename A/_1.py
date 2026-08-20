@@ -163,15 +163,17 @@ def UppBridge(A : list[tuple[int, int]], B : list[tuple[int, int]]) -> list[tupl
         
         # step 2 : compute next index of A, compute dets , if * < 0 -> not in the same -> i = i_next
         i_next = (i + 1) % len(A)
-        if ComputeDet(A[i], A[i_next], B[j]) < 0:
+        detA = ComputeDet(A[i], A[i_next], B[j])
+        if detA < 0 or (detA == 0 and DistSq(A[i_next], B[j]) > DistSq(A[i], B[j])):
             inew = i_next
+        
 
         # step 3 : same  as step 2 but with backwards
         j_prev = (j - 1) % len(B)
-        if ComputeDet(B[j], B[j_prev], A[i]) > 0:
-            jnew = j_prev
+        detB = ComputeDet(B[j], B[j_prev], A[i])
+        if detB > 0 or (detB == 0 and DistSq(B[j_prev], A[i]) > DistSq(B[j], A[i])): 
+            jnew = j_prev                
 
-        
         # step 4 : break condition
         if i != inew or j != jnew :
             i = inew
@@ -191,14 +193,14 @@ def DownBridge(A : list[tuple[int, int]], B : list[tuple[int, int]]) -> list[tup
         
         # step 2 : compute next index of A, compute dets , if * < 0 -> not in the same -> i = i_next
         i_prev = (i - 1) % len(A)
-        if ComputeDet(A[i], A[i_prev], B[j]) > 0:
+        detA = ComputeDet(A[i], A[i_prev], B[j])
+        if detA > 0 or (detA == 0 and DistSq(A[i_prev], B[j]) > DistSq(A[i], B[j])):
             inew = i_prev
 
-        # step 3 : same  as step 2 but with backwards
         j_next = (j + 1) % len(B)
-        if ComputeDet(B[j], B[j_next], A[i]) < 0:
+        detB = ComputeDet(B[j], B[j_next], A[i])
+        if detB < 0 or (detB == 0 and DistSq(B[j_next], A[i]) > DistSq(B[j], A[i])):
             jnew = j_next
-
        
         # step 4 : break condition
         if i != inew or j != jnew :
@@ -240,7 +242,10 @@ def ComputeDet(x : tuple[int, int], y : tuple[int, int], z : tuple[int, int]) ->
 
     det = x2*y3 - x3*y2 -x1*y3 + x1*y2 + y1*x3 - y1*x2
     return det
-   
+
+# to check sinefthiaka kai katheta 
+def DistSq(p1: tuple[int, int], p2: tuple[int, int]) -> int:
+    return (p1[0] - p2[0])**2 + (p1[1] - p2[1])**2  
 # ---------------------------------------------------------------------------------------------------------
 # ---------------------------------------------------------------------------------------------------------
 # ---------------------------------------------------------------------------------------------------------
