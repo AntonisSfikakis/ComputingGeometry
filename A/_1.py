@@ -1,7 +1,10 @@
 
+from re import M
 import numpy as np
-from math import floor, ceil
-
+import math
+# ---------------------------------------------------------------------------------------------------------
+# ---------------------------------------------------------------------------------------------------------
+# ---------------------------------------------------------------------------------------------------------
 # P is a set of pairs (aka tuples) , mayber ordered later
 def Incremental(P: set[tuple[int, int]]):
     # step 1 : sort by x
@@ -67,6 +70,10 @@ def Incremental(P: set[tuple[int, int]]):
     L = L_upp + L_down
     return L
 
+# ---------------------------------------------------------------------------------------------------------
+# ---------------------------------------------------------------------------------------------------------
+# ---------------------------------------------------------------------------------------------------------
+
 def GiftWrapping(S : set[tuple[int , int]]):
     # step 1 : r = min(S)
     r = r0 = min(S, key=lambda x: (x[0], x[1])) 
@@ -105,75 +112,128 @@ def GiftWrapping(S : set[tuple[int , int]]):
         Chain.append(r)
 
     return Chain
-def SolveDevideAndConquer(P : set[tuple[int, int]]):
+
+# ---------------------------------------------------------------------------------------------------------
+# ---------------------------------------------------------------------------------------------------------
+# ---------------------------------------------------------------------------------------------------------
+
+def SolveDivideAndConquer(P : list[tuple[int, int]]):
     # step 1 : x sort P  
-    P_sorted = tuple(sorted(P, key=lambda x : [x[0], x[1]]))
+    P_sorted = sorted(P, key=lambda x : [x[0], x[1]])
     return DivideAndConquer(P_sorted)
 
-def DivideAndConquer(P : set[tuple[int, int]]):
+def DivideAndConquer(P : list[tuple[int, int]]) :
     # a flag in order to sort the first iteration
     if len(P) <= 3 :
         return CCWSorting(P) 
+    
+    mid = len(P) // 2
+    A : list[tuple[int , int]] = P[:mid]
+    B : list[tuple[int , int]] = P[mid:]
 
-    A : list[tuple[int , int]] = P[0 : ceil(len(P)/2)]
-    B : list[tuple[int , int]] = P[floor (len(P)/2) + 1 : len(P)]
-
-    print(f"P : {P}")
-    print(f"A : {A}")
-    print(f"B : {B}")
-
-    L = list(DivideAndConquer(A))
-    R = list(DivideAndConquer(B))
+    L = DivideAndConquer(A)
+    R = DivideAndConquer(B)
 
     return MyMerge(L,R, UppBridge(L,R), DownBridge(L,R))
 
 # CCW sorting
 def CCWSorting(P : list[tuple[int, int]]) -> list[tuple[int, int]]:
+    if len(P) <= 2: 
+        return list(P)
+
+
     det = ComputeDet(P[0], P[1], P[2])
     if det > 0 :
         return list(P) 
 
     if det == 0:
-        return [P[0], P[2]] 
+        return [P[0], P[-1]] 
     
     return [P[0], P[2], P[1]]
 
 # Upp bridge and Down bridge for Devide And conquer
-def UppBridge(A : set[tuple[int, int]], B : set[tuple[int, int]]):
+def UppBridge(A : list[tuple[int, int]], B : list[tuple[int, int]]) -> list[tuple[int, int]]:
     # step 1 : A(i) -> the far right of KP(A) , B(j) -> the far left of KB(B)
-    rA = A[-1]
-    lB = B[0]
-
-    i = 1 
-    j = 2
+    i = len(A) - 1 
+    j = 0 
 
     while True:
-        InLineA = ComputeDet(A[i], A[i+1], A[0])
-        InLineB = ComputeDet(A[i], A[i+1], B[j])   
+        inew = i
+        jnew = j
+        
+        # step 2 : compute next index of A, compute dets , if * < 0 -> not in the same -> i = i_next
+        i_next = (i + 1) % len(A)
+        if ComputeDet(A[i], A[i_next], B[j]) < 0:
+            inew = i_next
 
-        if InLineB * InLineA < 0 :
-            inew = i + 1
+        # step 3 : same  as step 2 but with backwards
+        j_prev = (j - 1) % len(B)
+        if ComputeDet(B[j], B[j_prev], A[i]) > 0:
+            jnew = j_prev
 
-        InLineB_new = ComputeDet(B[j], B[j-1], B[0])
-        InLineA_new = ComputeDet(B[j], B[j-1], A[i])   
-
-        if InLineB_new * InLineA_new < 0 :
-            jnew = j - 1
-
+        
+        # step 4 : break condition
         if i != inew or j != jnew :
+            i = inew
+            j = jnew
             continue
 
         return [A[i],B[j]]
 
-    return 
+def DownBridge(A : list[tuple[int, int]], B : list[tuple[int, int]]) -> list[tuple[int, int]]:
+    # step 1 : A(i) -> the far right of KP(A) , B(j) -> the far left of KB(B)
+    i = len(A) - 1 
+    j = 0 
 
-def DownBridge(A : set[tuple[int, int]], B : set[tuple[int, int]]):
-    return
+    while True:
+        inew = i
+        jnew = j
+        
+        # step 2 : compute next index of A, compute dets , if * < 0 -> not in the same -> i = i_next
+        i_prev = (i - 1) % len(A)
+        if ComputeDet(A[i], A[i_prev], B[j]) > 0:
+            inew = i_prev
 
-def MyMerge(L : list[tuple[int, int]], R : list[tuple[int, int]], upp : list[tuple[int, int]], down : list[tuple[int, int]]):
-    return
+        # step 3 : same  as step 2 but with backwards
+        j_next = (j + 1) % len(B)
+        if ComputeDet(B[j], B[j_next], A[i]) < 0:
+            jnew = j_next
 
-def ComputeDet(x : tuple[int, int], y : tuple[int, int], z : tuple[int, int]):
+       
+        # step 4 : break condition
+        if i != inew or j != jnew :
+            i = inew
+            j = jnew
+            continue
+
+        return [A[i],B[j]]
+
+
+
+def MyMerge(L : list[tuple[int, int]], R : list[tuple[int, int]], upp : list[tuple[int, int]], down : list[tuple[int, int]]) -> list[tuple[int, int]]:
+    i_upp = L.index(upp[0])
+    j_upp = R.index(upp[1])
+    i_down = L.index(down[0])
+    j_down = R.index(down[1])
+    
+    idx = i_upp 
+    Merged = []
+    while True:
+        Merged.append(L[idx])
+        if (idx == i_down):
+            break
+        idx = (idx + 1) % len(L)
+
+    idx = j_down
+    while True:
+        Merged.append(R[idx])
+        if (idx == j_upp):
+            break
+        idx = (idx + 1) % len(R)
+
+    return Merged
+
+def ComputeDet(x : tuple[int, int], y : tuple[int, int], z : tuple[int, int]) -> int:
     x1,y1 = x 
     x2,y2 = y 
     x3,y3 = z 
@@ -181,6 +241,6 @@ def ComputeDet(x : tuple[int, int], y : tuple[int, int], z : tuple[int, int]):
     det = x2*y3 - x3*y2 -x1*y3 + x1*y2 + y1*x3 - y1*x2
     return det
    
-S = set([(10,27), (5,6), (7,8), (0,2), (2,5)])
-SolveDevideAndConquer(S)
-
+# ---------------------------------------------------------------------------------------------------------
+# ---------------------------------------------------------------------------------------------------------
+# ---------------------------------------------------------------------------------------------------------
