@@ -48,7 +48,7 @@ Divide and Conquer
     -> ta shemia einai se genikh thesi
     -> dhmiorgia Algorithm gia CCW taksinonmish
     -> Uppbridge kai DownBridge Algorithms
-    
+      -> detA * detB < 0 == diaforetiko imiepipedo  else idio:   
 
 
 

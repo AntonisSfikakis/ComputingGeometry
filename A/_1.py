@@ -140,7 +140,32 @@ def CCWSorting(P : list[tuple[int, int]]) -> list[tuple[int, int]]:
 
 # Upp bridge and Down bridge for Devide And conquer
 def UppBridge(A : set[tuple[int, int]], B : set[tuple[int, int]]):
-    return
+    # step 1 : A(i) -> the far right of KP(A) , B(j) -> the far left of KB(B)
+    rA = A[-1]
+    lB = B[0]
+
+    i = 1 
+    j = 2
+
+    while True:
+        InLineA = ComputeDet(A[i], A[i+1], A[0])
+        InLineB = ComputeDet(A[i], A[i+1], B[j])   
+
+        if InLineB * InLineA < 0 :
+            inew = i + 1
+
+        InLineB_new = ComputeDet(B[j], B[j-1], B[0])
+        InLineA_new = ComputeDet(B[j], B[j-1], A[i])   
+
+        if InLineB_new * InLineA_new < 0 :
+            jnew = j - 1
+
+        if i != inew or j != jnew :
+            continue
+
+        return [A[i],B[j]]
+
+    return 
 
 def DownBridge(A : set[tuple[int, int]], B : set[tuple[int, int]]):
     return
