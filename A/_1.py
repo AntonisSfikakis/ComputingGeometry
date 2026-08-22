@@ -32,9 +32,9 @@ def Incremental(P: set[tuple[int, int]]):
 
             # det = x2y3 - x3y2 -x1y3 + x1y2 + y1x3 - y1x2
             
-            x1,y1 = L_down[-3]
-            x2,y2 = L_down[-2]
-            x3,y3 = L_down[-1]
+            x1,y1 = L_upp[-3]
+            x2,y2 = L_upp[-2]
+            x3,y3 = L_upp[-1]
 
             det = x2*y3 - x3*y2 -x1*y3 + x1*y2 + y1*x3 - y1*x2
 
