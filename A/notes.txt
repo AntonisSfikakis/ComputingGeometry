@@ -50,6 +50,12 @@ Divide and Conquer
     -> Uppbridge kai DownBridge Algorithms
       -> detA * detB < 0 == diaforetiko imiepipedo  else idio:   
 
+QuickHull
+    -> basikh idea : aporiptoume shmeia pou sigoura tha einai sto eswteriko tou periblhmatos
+    -> b1 : evresh 4 akraiwn shmeiwn    
+    -> b2 : ennwnoume afta ta shmeia , ta upoloipa boroun na agnoithoun
+    -> b3 : ypologizoumem ta kirta periblhmata se kathe mia apo tis 4 perioxes ektos tou tetraplevrou
+    
 
 
 

@@ -1,10 +1,12 @@
 
+from math  import *
 from re import M
 import numpy as np
-import math
+
 # ---------------------------------------------------------------------------------------------------------
 # ---------------------------------------------------------------------------------------------------------
 # ---------------------------------------------------------------------------------------------------------
+
 # P is a set of pairs (aka tuples) , mayber ordered later
 def Incremental(P: set[tuple[int, int]]):
     # step 1 : sort by x
@@ -246,6 +248,64 @@ def ComputeDet(x : tuple[int, int], y : tuple[int, int], z : tuple[int, int]) ->
 # to check sinefthiaka kai katheta 
 def DistSq(p1: tuple[int, int], p2: tuple[int, int]) -> int:
     return (p1[0] - p2[0])**2 + (p1[1] - p2[1])**2  
+
 # ---------------------------------------------------------------------------------------------------------
 # ---------------------------------------------------------------------------------------------------------
 # ---------------------------------------------------------------------------------------------------------
+
+def SolveQuickHull(P : list[tuple[int, int]]) -> list[tuple[tuple, tuple]]:
+    a = max(P, key= lambda x : (x[0], x[1])) 
+    b = min(P, key= lambda x : (x[0], x[1])) 
+
+    return QuickHull(a,b,P)
+
+def QuickHull(A : tuple[int, int], B : tuple[int, int], S : list[tuple[int , int]]) -> list[tuple[int, int]]:
+    if len(S) == 2 :
+        return [A,B]
+    
+    G = findMaxDist(A,B,S)
+    M = findRight(A,G,S)
+    N = findRight(G,B,S)
+
+    return QuickHull(A,G,M), QuickHull(G,B,N)
+
+
+def findMaxDist(A : tuple[int, int], B : tuple[int, int], S : list[tuple[int , int]]) -> tuple[int, int]:
+    a,b,c = findLine(A,B)
+
+    # distance -> abs(ax0 + by0 + c) / root(a^2 + b^2)
+    maxPoint : tuple[int, int] = ()
+    maximum = -1
+    for point in S:
+        x0,y0 = point
+
+        dist = abs(a * x0 + b * y0 + c) / sqrt( a**2  + b**2)
+        if (dist > maximum):
+            maxPoint = point
+            maximum = dist
+
+    return maxPoint
+
+
+
+def findLine(A : tuple[int, int], B : tuple[int ,int]) -> tuple[int ,int ,int]:
+    # L -> y2 - y1 / x2 - x1 
+    x1, y1 = A
+    x2, y2 = B
+
+    if x1 == x2:
+        return  (x1, 0, 0)
+
+    L = (y2 - y1) / (x2 - x1)
+
+    return (L, 1, L*(-x1)+y1)
+
+def findRight(A : tuple[int, int], B : tuple[int ,int], S : list[tuple[int , int]]) -> list[tuple[int ,int]]:
+    RightList = []
+    for point in S: 
+        det = ComputeDet(A, B, point)
+        if det < 0:
+            RightList.append(point)
+
+
+    return RightList
