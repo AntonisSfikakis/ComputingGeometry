@@ -267,15 +267,27 @@ def SolveQuickHull(P : list[tuple[int, int]]) -> list[tuple[tuple, tuple]]:
     return QuickHull(bx, by, BxBy) + QuickHull(by, ax, ByAx) + QuickHull(ax, ay, AxAy) + QuickHull(ay, bx, AyBx)
 
 def QuickHull(A : tuple[int, int], B : tuple[int, int], S : list[tuple[int , int]]) -> list[tuple[int, int]]:
-    if len(S) == 2 :
-        return [A,B]
+    if len(S) == 0 :
+        return [A]
     
     G = findMaxDist(A,B,S)
     M = findRight(A,G,S)
     N = findRight(G,B,S)
 
-    return QuickHull(A,G,M), QuickHull(G,B,N)
+    return QuickHull(A,G,M) + QuickHull(G,B,N)
 
+
+def findMaxDist(A : tuple[int, int], B : tuple[int, int], S : list[tuple[int , int]]) -> tuple[int, int]:
+    max_point = ()
+    maximum = -1
+
+    for point in S:
+        det = ComputeDet(A, B, point)
+        if abs(det) > maximum :
+            maximum = abs(det)
+            max_point = point
+
+    return max_point    
 
 def findRight(A : tuple[int, int], B : tuple[int ,int], S : list[tuple[int , int]]) -> list[tuple[int ,int]]:
     RightList = []
