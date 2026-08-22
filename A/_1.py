@@ -254,10 +254,17 @@ def DistSq(p1: tuple[int, int], p2: tuple[int, int]) -> int:
 # ---------------------------------------------------------------------------------------------------------
 
 def SolveQuickHull(P : list[tuple[int, int]]) -> list[tuple[tuple, tuple]]:
-    a = max(P, key= lambda x : (x[0], x[1])) 
-    b = min(P, key= lambda x : (x[0], x[1])) 
+    ax = max(P, key= lambda x : x[0]) 
+    ay = max(P, key= lambda x : x[1]) 
+    bx = min(P, key= lambda x : x[0]) 
+    by = min(P, key= lambda x : x[1]) 
 
-    return QuickHull(a,b,P)
+    BxBy = findRight(bx, by, P)
+    ByAx = findRight(by, ax, P)
+    AxAy = findRight(ax, ay, P)
+    AyBx = findRight(ay, bx, P)
+
+    return QuickHull(bx, by, BxBy) + QuickHull(by, ax, ByAx) + QuickHull(ax, ay, AxAy) + QuickHull(ay, bx, AyBx)
 
 def QuickHull(A : tuple[int, int], B : tuple[int, int], S : list[tuple[int , int]]) -> list[tuple[int, int]]:
     if len(S) == 2 :
@@ -269,36 +276,6 @@ def QuickHull(A : tuple[int, int], B : tuple[int, int], S : list[tuple[int , int
 
     return QuickHull(A,G,M), QuickHull(G,B,N)
 
-
-def findMaxDist(A : tuple[int, int], B : tuple[int, int], S : list[tuple[int , int]]) -> tuple[int, int]:
-    a,b,c = findLine(A,B)
-
-    # distance -> abs(ax0 + by0 + c) / root(a^2 + b^2)
-    maxPoint : tuple[int, int] = ()
-    maximum = -1
-    for point in S:
-        x0,y0 = point
-
-        dist = abs(a * x0 + b * y0 + c) / sqrt( a**2  + b**2)
-        if (dist > maximum):
-            maxPoint = point
-            maximum = dist
-
-    return maxPoint
-
-
-
-def findLine(A : tuple[int, int], B : tuple[int ,int]) -> tuple[int ,int ,int]:
-    # L -> y2 - y1 / x2 - x1 
-    x1, y1 = A
-    x2, y2 = B
-
-    if x1 == x2:
-        return  (x1, 0, 0)
-
-    L = (y2 - y1) / (x2 - x1)
-
-    return (L, 1, L*(-x1)+y1)
 
 def findRight(A : tuple[int, int], B : tuple[int ,int], S : list[tuple[int , int]]) -> list[tuple[int ,int]]:
     RightList = []
