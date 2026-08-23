@@ -172,7 +172,6 @@ def UppBridge(A : list[tuple[int, int]], B : list[tuple[int, int]]) -> list[tupl
                 break
 
         while True:
-            # find the leftest B
             j_prev = (j - 1) % len(B)
             detB = ComputeDet(B[j], B[j_prev], A[i])
             if detB > 0 or (detB == 0 and DistSq(B[j_prev], A[i]) > DistSq(B[j], A[i])): 

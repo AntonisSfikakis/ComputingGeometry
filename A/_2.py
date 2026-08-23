@@ -58,7 +58,7 @@ quick.append(quick[0])
 qx,qy = zip(*quick)
 
 plt.scatter(px, py, color='blue', label='Starting Points')
-plt.plot(qx, qy,color='purple', linewidth=2, label='Quick Hull')
+plt.plot(qx, qy, linewidth=2, label='Quick Hull')
 
 plt.title("Quick hull")
 plt.legend()
