@@ -132,4 +132,33 @@ def tests_QuickHull():
         print(f"Result : {clean_result}")
         print("-" * 50)
 
-tests_QuickHull()
+import matplotlib.pyplot as plt
+import random
+P = [] 
+for _ in range(150):
+    x = random.randint(0, 1000)
+    y = random.randint(0, 1000)
+    P.append((x,y))
+
+
+# 1. Παίρνουμε το αποτέλεσμα από τον αλγόριθμό σου
+hull = Incremental(P)
+
+# 2. Προσθέτουμε το πρώτο σημείο στο τέλος για να "κλείσει" η γραμμή του πολυγώνου γύρω-γύρω
+hull.append(hull[0])
+
+# 3. Ξεπακετάρουμε τα x και y για το περίβλημα (κόκκινη γραμμή)
+hx, hy = zip(*hull)
+
+# 4. Ξεπακετάρουμε τα x και y για ΟΛΑ τα 150 αρχικά σημεία (μπλε κουκκίδες)
+px, py = zip(*P)
+
+# 5. Σχεδιασμός
+plt.figure(figsize=(8, 6))
+plt.scatter(px, py, color='blue', s=15, label='Αρχικά Σημεία')  # s=15 είναι το μέγεθος της κουκκίδας
+plt.plot(hx, hy, color='red', linewidth=2, label='Κυρτό Περίβλημα')
+
+# 6. Εμφάνιση
+plt.title("Εύρεση Κυρτού Περιβλήματος (Incremental)")
+plt.legend()
+plt.show()
