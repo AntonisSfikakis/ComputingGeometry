@@ -155,62 +155,66 @@ def CCWSorting(P : list[tuple[int, int]]) -> list[tuple[int, int]]:
 
 # Upp bridge and Down bridge for Devide And conquer
 def UppBridge(A : list[tuple[int, int]], B : list[tuple[int, int]]) -> list[tuple[int, int]]:
-    # step 1 : A(i) -> the far right of KP(A) , B(j) -> the far left of KB(B)
-    i = len(A) - 1 
-    j = 0 
+    i = max(range(len(A)), key=lambda k: (A[k][0], A[k][1]))
+    j = min(range(len(B)), key=lambda k: (B[k][0], B[k][1]))
 
     while True:
-        inew = i
-        jnew = j
+        changed = False
         
-        # step 2 : compute next index of A, compute dets , if * < 0 -> not in the same -> i = i_next
-        i_next = (i + 1) % len(A)
-        detA = ComputeDet(A[i], A[i_next], B[j])
-        if detA < 0 or (detA == 0 and DistSq(A[i_next], B[j]) > DistSq(A[i], B[j])):
-            inew = i_next
-        
+        while True:
+            # find the rightest A
+            i_next = (i + 1) % len(A)
+            detA = ComputeDet(A[i], A[i_next], B[j])
+            if detA < 0 or (detA == 0 and DistSq(A[i_next], B[j]) > DistSq(A[i], B[j])):
+                i = i_next
+                changed = True
+            else:
+                break
 
-        # step 3 : same  as step 2 but with backwards
-        j_prev = (j - 1) % len(B)
-        detB = ComputeDet(B[j], B[j_prev], A[i])
-        if detB > 0 or (detB == 0 and DistSq(B[j_prev], A[i]) > DistSq(B[j], A[i])): 
-            jnew = j_prev                
+        while True:
+            # find the leftest B
+            j_prev = (j - 1) % len(B)
+            detB = ComputeDet(B[j], B[j_prev], A[i])
+            if detB > 0 or (detB == 0 and DistSq(B[j_prev], A[i]) > DistSq(B[j], A[i])): 
+                j = j_prev 
+                changed = True
+            else:
+                break
 
-        # step 4 : break condition
-        if i != inew or j != jnew :
-            i = inew
-            j = jnew
-            continue
+        if not changed:
+            break
 
-        return [A[i],B[j]]
+    return [A[i], B[j]]
 
 def DownBridge(A : list[tuple[int, int]], B : list[tuple[int, int]]) -> list[tuple[int, int]]:
-    # step 1 : A(i) -> the far right of KP(A) , B(j) -> the far left of KB(B)
-    i = len(A) - 1 
-    j = 0 
+    i = max(range(len(A)), key=lambda k: (A[k][0], A[k][1]))
+    j = min(range(len(B)), key=lambda k: (B[k][0], B[k][1]))
 
     while True:
-        inew = i
-        jnew = j
+        changed = False
         
-        # step 2 : compute next index of A, compute dets , if * < 0 -> not in the same -> i = i_next
-        i_prev = (i - 1) % len(A)
-        detA = ComputeDet(A[i], A[i_prev], B[j])
-        if detA > 0 or (detA == 0 and DistSq(A[i_prev], B[j]) > DistSq(A[i], B[j])):
-            inew = i_prev
+        while True:
+            i_prev = (i - 1) % len(A)
+            detA = ComputeDet(A[i], A[i_prev], B[j])
+            if detA > 0 or (detA == 0 and DistSq(A[i_prev], B[j]) > DistSq(A[i], B[j])):
+                i = i_prev
+                changed = True
+            else:
+                break
 
-        j_next = (j + 1) % len(B)
-        detB = ComputeDet(B[j], B[j_next], A[i])
-        if detB < 0 or (detB == 0 and DistSq(B[j_next], A[i]) > DistSq(B[j], A[i])):
-            jnew = j_next
-       
-        # step 4 : break condition
-        if i != inew or j != jnew :
-            i = inew
-            j = jnew
-            continue
+        while True:
+            j_next = (j + 1) % len(B)
+            detB = ComputeDet(B[j], B[j_next], A[i])
+            if detB < 0 or (detB == 0 and DistSq(B[j_next], A[i]) > DistSq(B[j], A[i])):
+                j = j_next
+                changed = True
+            else:
+                break
 
-        return [A[i],B[j]]
+        if not changed:
+            break
+
+    return [A[i], B[j]]
 
 
 
