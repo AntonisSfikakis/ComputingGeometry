@@ -76,7 +76,6 @@ ax.plot(qx, qy, color='blue', linewidth=2, label='Minimal Target Area (Convex Hu
 bomb_centers = quick  # Τοποθέτηση στις ακραίες κορυφές
 
 for i, (bx, by) in enumerate(bomb_centers):
-    # Σχεδιασμός κύκλου έκρηξης
     circle = plt.Circle(
         (bx, by),
         rad,
@@ -86,7 +85,7 @@ for i, (bx, by) in enumerate(bomb_centers):
         linestyle='--',
     )
     ax.add_patch(circle)
-    # Κέντρο βόμβας
+
     ax.scatter(
         bx,
         by,
@@ -97,7 +96,7 @@ for i, (bx, by) in enumerate(bomb_centers):
         label='Bomb Detonation Center' if i == 0 else "",
     )
 
-ax.set_aspect('equal')  # Για να φαίνονται οι κύκλοι στρογγυλοί και όχι αυγά
+ax.set_aspect('equal')  
 plt.title(
     f"Drone Strike Coverage: {len(bomb_centers)} Bombs (Radius={rad}) for Convex Hull Targets"
 )
